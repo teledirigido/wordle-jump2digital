@@ -1,0 +1,54 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.word {
+  display: flex;
+  gap:8px;
+}
+
+.word-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5rem;;
+}
+
+.word {
+  padding-bottom:8px;
+}
+
+.letter {
+  --size:3.5rem;
+  width: var(--size);
+  height: var(--size);
+  line-height: var(--size);
+  border:2px solid #CCC;
+  border-radius:5px;
+  font-size:2.2rem;
+  font-weight:bold;
+}
+
+.letter-includes,
+.letter-exact,
+.letter-error {
+  color:white;
+}
+
+.letter-includes {
+  background-color: rgb(228, 168, 29);
+  border-color: rgb(228, 168, 29)
+}
+
+.letter-exact {
+  background-color: rgb(67, 160, 71);
+  border-color: rgb(67, 160, 71);
+}
+
+.letter-error {
+  background-color: #666;
+  border-color: #666;
+}
