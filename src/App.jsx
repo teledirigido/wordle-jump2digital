@@ -19,13 +19,12 @@ function App() {
     const currentIndex = words.findIndex( item => !item.isChecked );
 
     // A - Z
-    if ( event.key.match(allowedKey)) {
+    if ( event.key.match(allowedKey) && wordsCopy[currentIndex].content.length < 5 ) {
 
       wordsCopy[currentIndex].content += event.key.toUpperCase();
       setWords(wordsCopy);
 
     }
-
 
     // Enter
     if( event.key === 'Enter' ) {
