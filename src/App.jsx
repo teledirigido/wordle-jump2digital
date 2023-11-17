@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import Word from './components/Word';
 import initialWords from './data/initialWords.json';
 
+import Keyboard from 'react-simple-keyboard';
+import 'react-simple-keyboard/build/css/index.css';
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -100,6 +103,23 @@ function App() {
 
   };
 
+  const onKeyboardPress = (letter) => {
+
+    switch (letter) { 
+      case '{bksp}':
+        onKeyUp({ key: 'Backspace' });
+        break;
+      case '{enter}':
+        onKeyUp({ key: 'Enter' });
+        break;
+      default:
+        onKeyUp({ key: letter });
+      break;
+    
+    }
+
+  }
+
   useEffect( () => {
     window.addEventListener('keyup', onKeyUp);
   }, []);
@@ -117,6 +137,23 @@ function App() {
         }
       </div>
       <ToastContainer />
+
+      <Keyboard
+        onKeyPress={onKeyboardPress}
+        layout={{
+          default: [
+            "Q W E R T Y U I O P",
+            'A S D F G H J K L Ñ',
+            "{enter} Z X C V B N M {bksp}"
+          ]
+        }}
+        display={{
+          '{bksp}': 'delete',
+          '{enter}': 'enviar'
+        }}
+        theme={"hg-theme-default hg-layout-default hg-keyboard"}
+        layoutName="default"
+      />
     </>
   )
 }
