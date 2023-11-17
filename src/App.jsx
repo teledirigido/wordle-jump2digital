@@ -12,7 +12,7 @@ function App() {
   const solution = "TIGRE";
   const [words, setWords] = useState(initialWords);
   
-  const onKeyUp = (event) => {
+  const onKeyUp = async (event) => {
 
     const wordsCopy = [...words];
     const allowedKey = /^[a-zA-Z]$/;
@@ -32,27 +32,29 @@ function App() {
       
       const wordToCheck = wordsCopy[currentIndex].content;
       
-      fetch('/api/v1/is-word', {
+      const response = await fetch('/api/v1/is-word', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ word: wordToCheck })
-      }).then( response => response.json() )
-      .then( (data) => {
-        if (data.result === 'error' ) {
-          toast('The word does not exist! 🎉', {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-        }
       });
+      
+      const data = await response.json();
+
+      if (data.result === 'error' ) {
+        toast('The word does not exist!', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        return false;
+      }
 
       wordsCopy[currentIndex].isChecked = true;
 
@@ -61,10 +63,12 @@ function App() {
         // Exact
         if ( letter === solution.charAt(index) ) {
           wordsCopy[currentIndex].status[index] = 'exact';
-          // Includes
+        
+        // Includes
         } else if ( solution.includes(letter) ) {
           wordsCopy[currentIndex].status[index] = 'includes';
-          // Error
+        
+        // Error
         } else {
           wordsCopy[currentIndex].status[index] = 'error';
         }
@@ -85,9 +89,6 @@ function App() {
       }
 
       setWords(wordsCopy);
-
-
-
 
     }
 

@@ -36,6 +36,7 @@
 .letter-exact,
 .letter-error {
   color:white;
+  transition: ease all 300ms;
 }
 
 .letter-includes {
